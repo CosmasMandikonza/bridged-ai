@@ -23,11 +23,22 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Debug - List Files Before
+        run: ls -la
+
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm list vite
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          echo "Build completed"
+          ls -la dist
+
+      - name: Debug - List Files After
+        run: ls -la
 
       - name: Build And Deploy
         id: builddeploy
@@ -38,8 +49,8 @@ jobs:
           action: "upload"
           app_location: "/"
           api_location: ""
-          output_location: "dist"  # Changed from "build" to "dist"
-          skip_app_build: true    # Added because we're building manually
+          output_location: "dist"
+          skip_app_build: false  # Changed to false to let Azure handle the build
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
