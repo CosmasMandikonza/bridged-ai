@@ -1,6 +1,5 @@
-// src/App.tsx
 import { useEffect } from 'react';
-import { PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication, LogLevel, Configuration } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from '@/components/layout/AppLayout';
@@ -12,7 +11,7 @@ import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { AuthProvider } from '@/context/AuthContext';
 import { AIChat } from '@/components/ai/AIChat';
 
-const msalConfig = {
+const msalConfig: Configuration = {
   auth: {
     clientId: import.meta.env.VITE_AZURE_B2C_CLIENT_ID,
     authority: `https://${import.meta.env.VITE_AZURE_B2C_TENANT_NAME}.b2clogin.com/${import.meta.env.VITE_AZURE_B2C_DOMAIN}/B2C_1_signupsignin`,
@@ -26,10 +25,10 @@ const msalConfig = {
   },
   system: {
     loggerOptions: {
-      loggerCallback: (level, message) => {
+      loggerCallback: (level: LogLevel, message: string): void => {
         console.log(message);
       },
-      logLevel: "Info"
+      logLevel: LogLevel.Info
     }
   }
 };
@@ -38,7 +37,7 @@ const msalInstance = new PublicClientApplication(msalConfig);
 
 const App = () => {
   useEffect(() => {
-    msalInstance.handleRedirectPromise().catch(error => {
+    msalInstance.handleRedirectPromise().catch((error: Error) => {
       console.error(error);
     });
   }, []);

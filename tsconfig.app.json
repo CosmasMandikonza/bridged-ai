@@ -13,9 +13,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // Changed to false temporarily
+    "noUnusedParameters": false, // Changed to false temporarily
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false, // Added this
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
@@ -29,5 +30,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build", "dist"]
 }

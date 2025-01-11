@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
+import type { UserConfig } from 'vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -16,5 +16,9 @@ export default defineConfig({
       { find: '@config', replacement: path.resolve(__dirname, './src/config') },
       { find: '@types', replacement: path.resolve(__dirname, './src/types') }
     ]
+  },
+  build: {
+    sourcemap: true,
+    outDir: 'dist'
   }
-})
+} as UserConfig)
